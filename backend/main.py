@@ -10,17 +10,23 @@ models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title = "Task Management API")
 
+
+origins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5500",
+]
 # Enable CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[""], # Change to specific domain in production
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Authroisation Engpoints
-@app.post("/sign-up", response_model=schemas.USerOut, status_code=status.HTTP_201_CREATED)
+@app.post("/signup", response_model=schemas.USerOut, status_code=status.HTTP_201_CREATED)
 def sign_up(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user:
