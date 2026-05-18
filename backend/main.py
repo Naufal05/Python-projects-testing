@@ -13,7 +13,7 @@ app = FastAPI(title = "Task Management API")
 # Enable CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Change to specific domain in production
+    allow_origins=["http://localhost:5173"], # Change to specific domain in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
